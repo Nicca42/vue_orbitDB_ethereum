@@ -7,9 +7,15 @@ import * as mutations from "./mutation-types";
 
 // Importing helper tools
 import { getNetIdString } from "@/utils/HelperTools";
+import { BucketHelper } from "../utils/HelperTextile.ts";
+const buckets = new BucketHelper();
 
 // Importing contract ABIs
 import LimeFactoryABI from "../../build/LimeFactory.json";
+
+//Textile things
+// import { Buckets, PushPathResult, KeyInfo } from '@textile/hub'
+// import { Libp2pCryptoIdentity } from '@textile/threads-core';
 
 import { BNavbar, BNavbarNav, BNavbarBrand } from 'bootstrap-vue'
 Vue.component('b-navbar', BNavbar);
@@ -22,6 +28,11 @@ Vue.use(Vuex)
 // The global state of the application
 export default new Vuex.Store({
   state: {
+    keyInfo: {
+      key: 'bo3mpfn54vhvovwbljxx5kqkbzq',
+      secret: '',
+      type: 1, 
+    },
     connected: false,
     ethers: null,
     provider: null,
@@ -30,13 +41,31 @@ export default new Vuex.Store({
     currentNetwork: null,
     daiAddress: null,
     userDaiBalance: null,
-    limeFactory: null
+    limeFactory: null,
+    identity: null,
+    buckets: null,
+    bucketKey: null
   },
   /**
      * mutations can only edit one state at a time. If multiple state changes
      * are done in the same mutation only the first one will execute.
      */
   mutations: {
+    [mutations.SET_USER_IDENTITY](state, identity) {
+      console.log("identity set to: ");
+      state.identity = identity;
+      console.log(state.identity);
+    },
+    [mutations.SET_BUCKET](state, buckets) {
+      console.log("buckets set to: ");
+      state.buckets = buckets;
+      console.log(state.buckets);
+    },
+    [mutations.SET_BUCKET_KEY](state, bucketKey) {
+      console.log("bucket key set to: ");
+      state.bucketKey = bucketKey;
+      console.log(state.bucketKey);
+    },
     [mutations.SET_SIGNER](state, signer) {
       console.log("signer set to: ");
       state.signer = signer;
@@ -142,6 +171,48 @@ export default new Vuex.Store({
       let results = await state.provider.getLogs(filter);
       // The emitted event data will be under [index].data
       console.log(results);
+    },
+    [actions.GET_IDENTITY]: async function({commit}) {
+      const id = buckets.getIdentity(null);
+      console.log(id);
+      // try {
+      //   let storedIdent = localStorage.getItem("identity")
+      //   if (storedIdent == null) {
+      //     throw new Error('No identity');
+      //   }
+      //   const restored = Libp2pCryptoIdentity.fromString(storedIdent);
+      //   commit(mutations.SET_USER_IDENTITY, restored);
+      //   return restored;
+      // }
+      // catch (e) {
+      //   /**
+      //    * If any error, create a new identity.
+      //    */
+      //   try {
+      //     const identity = await Libp2pCryptoIdentity.fromRandom()
+      //     const identityString = identity.toString()
+      //     commit(mutations.SET_USER_IDENTITY, identityString);
+      //     return identityString;
+      //   } catch (err) {
+      //     return err.message;
+      //   }
+      // }
+    },
+    [actions.GET_BUCKETS]: async function ({commit, state}) {
+      // if(!state.identity) {
+      //   throw new Error('Identity not set');
+      // }
+      // const buckets = await Buckets.withKeyInfo(state.keyInfo);
+      // commit(mutations.SET_BUCKET, buckets);
+      // // Authorize the user and your insecure keys with getToken
+      // await buckets.getToken(state.identity);
+      // console.log("3")
+      // const root = await buckets.open('io.textile.dropzone');
+      // if (!root) {
+      //   throw new Error('Failed to open bucket')
+      // }
+      // commit(mutations.SET_BUCKET_KEY, root.key);
+      // return {buckets: buckets, bucketKey: root.key};
     },
   }
 });

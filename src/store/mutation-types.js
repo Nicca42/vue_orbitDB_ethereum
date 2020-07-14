@@ -10,3 +10,8 @@ export const SET_LIME_FACTORY = "SET_LIME_FACTORY";
 // User info
 export const SET_USER_DAI_BALANCE = "SET_USER_DAI_BALANCE";
 export const SET_USER_TOKEN_BALANCE = "SET_USER_TOKEN_BALANCE";
+// Textile state
+export const SET_USER_IDENTITY = "SET_USER_IDENTITY";
+export const SET_BUCKET = "SET_BUCKET";
+export const SET_BUCKET_KEY = "SET_BUCKET_KEY";
+

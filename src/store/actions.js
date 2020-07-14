@@ -2,3 +2,5 @@ export const SET_UP_INFO = "SET_UP_INFO";
 export const SET_ETHERS = "SET_ETHERS";
 export const SET_CONTRACTS = "SET_CONTRACTS";
 export const INTERACT_CONTRACT = "INTERACT_CONTRACT";
+export const GET_IDENTITY = "GET_IDENTITY";
+export const GET_BUCKETS = "GET_BUCKETS";

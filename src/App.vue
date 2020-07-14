@@ -20,7 +20,6 @@ import ethers from "ethers";
 // import * as mutations from "@/store/mutation-types";
 import { mapActions, mapState } from "vuex";
 
-
 export default {
   data() {
     return {
@@ -30,7 +29,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["SET_ETHERS", "SET_UP_INFO"])
+    ...mapActions([
+      "SET_ETHERS", 
+      "SET_UP_INFO",
+      "GET_IDENTITY",
+      "GET_BUCKETS"
+    ])
   },
   async mounted() {
     if(window.ethereum) {
@@ -40,6 +44,8 @@ export default {
       this.SET_ETHERS(this.ethers);
       this.SET_UP_INFO(this.provider);
     }
+    const identity = await this.GET_IDENTITY()
+    const {bucketKey, buckets} = await this.GET_BUCKETS();
   },
   computed: {
     ...mapState(["currentNetwork", "userAddress"])
