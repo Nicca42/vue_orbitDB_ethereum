@@ -2,14 +2,15 @@ import { Buckets, PushPathResult, KeyInfo } from '@textile/hub'
 import { Libp2pCryptoIdentity } from '@textile/threads-core';
 
 class BucketHelper {
-    getIdentity = async (identity:string): Promise<Libp2pCryptoIdentity> => {
+    getIdentity = async (identity:string): Promise<Array<any>> => {
         try {
             var storedIdent = identity;
             if (storedIdent === null) {
                 throw new Error('No identity');
             }
             const restored = Libp2pCryptoIdentity.fromString(storedIdent);
-            return restored;
+            const identityString = identity.toString();
+            return [restored, identityString];
             }
         catch (e) {
             /**
@@ -18,7 +19,7 @@ class BucketHelper {
             try {
                 const identity = await Libp2pCryptoIdentity.fromRandom();
                 const identityString = identity.toString();
-                return identity;
+                return [identity, identityString];
             } catch (err) {
                 return err.message;
             }
@@ -49,4 +50,14 @@ class BucketHelper {
     // }
 }
 
-export default BucketHelper;
+export { BucketHelper };
+// module.exports = {
+//   output: {
+//     filename: 'BucketHelper.ts'
+//   },
+//   module: {
+//     rules: [
+//       { test: /\.ts$/, loader: 'awesome-typescript-loader' }
+//     ]
+//   }
+// };

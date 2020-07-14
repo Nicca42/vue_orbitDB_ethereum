@@ -7,15 +7,10 @@ import * as mutations from "./mutation-types";
 
 // Importing helper tools
 import { getNetIdString } from "@/utils/HelperTools";
-import { BucketHelper } from "../utils/HelperTextile.ts";
-const buckets = new BucketHelper();
-
+import { BucketHelper } from "!awesome-typescript-loader!../utils/HelperTextile.ts";
+const bucketHelper = new BucketHelper();
 // Importing contract ABIs
 import LimeFactoryABI from "../../build/LimeFactory.json";
-
-//Textile things
-// import { Buckets, PushPathResult, KeyInfo } from '@textile/hub'
-// import { Libp2pCryptoIdentity } from '@textile/threads-core';
 
 import { BNavbar, BNavbarNav, BNavbarBrand } from 'bootstrap-vue'
 Vue.component('b-navbar', BNavbar);
@@ -43,6 +38,7 @@ export default new Vuex.Store({
     userDaiBalance: null,
     limeFactory: null,
     identity: null,
+    libp2pIdentity: null,
     buckets: null,
     bucketKey: null
   },
@@ -55,6 +51,11 @@ export default new Vuex.Store({
       console.log("identity set to: ");
       state.identity = identity;
       console.log(state.identity);
+    },
+    [mutations.SET_USER_LIBP2P_IDENTITY](state, libp2pId) {
+      console.log("identity set to: ");
+      state.libp2pIdentity = libp2pId;
+      console.log(state.libp2pIdentity);
     },
     [mutations.SET_BUCKET](state, buckets) {
       console.log("buckets set to: ");
@@ -173,8 +174,10 @@ export default new Vuex.Store({
       console.log(results);
     },
     [actions.GET_IDENTITY]: async function({commit}) {
-      const id = buckets.getIdentity(null);
-      console.log(id);
+      const id = await bucketHelper.getIdentity(null);
+
+      commit(mutations.SET_USER_LIBP2P_IDENTITY, id[0]);
+      commit(mutations.SET_USER_IDENTITY, id[1]);
       // try {
       //   let storedIdent = localStorage.getItem("identity")
       //   if (storedIdent == null) {
@@ -191,7 +194,7 @@ export default new Vuex.Store({
       //   try {
       //     const identity = await Libp2pCryptoIdentity.fromRandom()
       //     const identityString = identity.toString()
-      //     commit(mutations.SET_USER_IDENTITY, identityString);
+          
       //     return identityString;
       //   } catch (err) {
       //     return err.message;

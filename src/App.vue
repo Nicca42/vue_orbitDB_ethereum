@@ -44,8 +44,9 @@ export default {
       this.SET_ETHERS(this.ethers);
       this.SET_UP_INFO(this.provider);
     }
+    console.log("here")
     const identity = await this.GET_IDENTITY()
-    const {bucketKey, buckets} = await this.GET_BUCKETS();
+    // const {bucketKey, buckets} = await this.GET_BUCKETS();
   },
   computed: {
     ...mapState(["currentNetwork", "userAddress"])
