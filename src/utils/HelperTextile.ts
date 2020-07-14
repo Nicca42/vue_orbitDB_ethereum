@@ -25,29 +25,28 @@ class BucketHelper {
             }
         }
     }
-    // getBucketKey = async (identity:string, key:string, keySecret:string, keyType:number): string[] => {
-    //     let libID = Libp2pCryptoIdentity.fromString(identity);
-    //     let keyInfo: KeyInfo = {
-    //         key: key,
-    //         secret: keySecret,
-    //         // @ts-ignore
-    //         type: keyType
-    //     }
+    getBucketKey = async (identity:Libp2pCryptoIdentity, key:string, keySecret:string, keyType:number): Promise<Array<any>> => {
+        let keyInfo: KeyInfo = {
+            key: key,
+            secret: keySecret,
+            // @ts-ignore
+            type: keyType
+        }
 
-    //     if (!libID) {
-    //         throw new Error('Identity not set')
-    //     }
-    //     const buckets = await Buckets.withKeyInfo(keyInfo);
-    //     // Authorize the user and your insecure keys with getToken
-    //     await buckets.getToken(libID);
+        if (!identity) {
+            throw new Error('Identity not set')
+        }
+        const buckets = await Buckets.withKeyInfo(keyInfo);
+        // Authorize the user and your insecure keys with getToken
+        await buckets.getToken(identity);
 
-    //     const root = await buckets.open('io.textile.dropzone');
+        const root = await buckets.open('io.textile.dropzone');
 
-    //     if (!root) {
-    //         throw new Error('Failed to open bucket')
-    //     }
-    //     return ([buckets],[root.key]);
-    // }
+        if (!root) {
+            throw new Error('Failed to open bucket')
+        }
+        return [buckets, root.key];
+    }
 }
 
 export { BucketHelper };

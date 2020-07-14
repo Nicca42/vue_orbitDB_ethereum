@@ -46,7 +46,7 @@ export default {
     }
     console.log("here")
     const identity = await this.GET_IDENTITY()
-    // const {bucketKey, buckets} = await this.GET_BUCKETS();
+    await this.GET_BUCKETS();
   },
   computed: {
     ...mapState(["currentNetwork", "userAddress"])
