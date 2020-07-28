@@ -4,3 +4,4 @@ export const SET_CONTRACTS = "SET_CONTRACTS";
 export const INTERACT_CONTRACT = "INTERACT_CONTRACT";
 export const GET_IDENTITY = "GET_IDENTITY";
 export const GET_BUCKETS = "GET_BUCKETS";
+export const GET_BUCKET_LINK = "GET_BUCKET_LINK";

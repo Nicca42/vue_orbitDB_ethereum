@@ -186,12 +186,20 @@ export default new Vuex.Store({
         state.keyInfo.key,
         state.keyInfo.secret,
         state.keyInfo.type,
-        );
-      console.log("here");
-      console.log(bucketsInfo);
+      );
 
       commit(mutations.SET_BUCKET, bucketsInfo[0]);
       commit(mutations.SET_BUCKET_KEY, bucketsInfo[1]);
+    },
+    [actions.GET_BUCKET_LINK]: async function ({commit, state}) { 
+      console.log(state.buckets);
+      console.log(state.bucketKey);
+      const links = await bucketHelper.getBucketLinks(
+        state.buckets,
+        state.bucketKey
+      );
+      console.log("here");
+      console.log(links);
     },
   }
 });

@@ -27,7 +27,7 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "HelloWorld",
-  data() {
+  	data() {
 	  return {
 			name: null,
 			carbs: null,

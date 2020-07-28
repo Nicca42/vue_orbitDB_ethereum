@@ -33,7 +33,8 @@ export default {
       "SET_ETHERS", 
       "SET_UP_INFO",
       "GET_IDENTITY",
-      "GET_BUCKETS"
+      "GET_BUCKETS",
+      "GET_BUCKET_LINK"
     ])
   },
   async mounted() {
@@ -47,6 +48,7 @@ export default {
     console.log("here")
     const identity = await this.GET_IDENTITY()
     await this.GET_BUCKETS();
+    await this.GET_BUCKET_LINK();
   },
   computed: {
     ...mapState(["currentNetwork", "userAddress"])
